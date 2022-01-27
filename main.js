@@ -25,10 +25,72 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 // Add your functions below:
 
+const validateCred = arr =>{
+    let result = false
+    let testArr = []
+    for(let i = arr.length - 2; i >= 0; i-=2){
+        let val = arr[i]*2
+        if(val >= 10){
+            val -= 9
+        }
+        testArr.push(val)
+        //console.log(val)
+    }
+    for(let i = arr.length - 1; i >= 0; i-=2){
+        testArr.push(arr[i])
+    }
+    let sum = testArr.reduce((a, b) => a + b, 0)
+    //console.log(testArr)
+    if(sum%10 === 0){
+        result = true
+    }
 
+    return result
+}
+/*
+console.log(validateCred(valid1))
+console.log(validateCred(valid2))
+console.log(validateCred(valid3))
+console.log(validateCred(valid4))
+console.log(validateCred(valid5))
+*/
 
+const findInvalidCards = (nestedArr) =>{
+    let invalidCards = []
+    for(let i = 0; i < nestedArr.length; i++){
+        if(!validateCred(nestedArr[i])){
+            invalidCards.push(nestedArr[i])
+        }
+    }
+    return invalidCards
+}
 
+let InvalidCompanyList = findInvalidCards(batch)
 
+const idInvalidCardCompanies = (nestedArr) =>{
+    let companies = []
+    for(let i = 0; i < nestedArr.length; i++){
+    switch(nestedArr[i][0]){
+        case 3:
+            companies.push('Amex (American Express)')
+            break;
+        case 4:
+            companies.push('Visa')
+            break;
+        case 5:
+            companies.push('Mastercard')
+            break;
+        case 6:
+            companies.push('Discover')
+            break;
+        default:
+            companies.push('Company not found')
 
+        }
+    }
+    return companies  
+}
+
+console.log(idInvalidCardCompanies(InvalidCompanyList))
 
 
